@@ -10,6 +10,7 @@
 
     <title>Webster & Frederickson, PLLC. Attorneys at Law</title>
 
+    <!-- Libre-Baskerville font -->
     <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,700,400italic' rel='stylesheet' type='text/css'>
 
     <!-- Bootstrap core CSS -->
