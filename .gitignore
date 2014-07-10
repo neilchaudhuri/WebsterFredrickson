@@ -1,0 +1,7 @@
+htdocs/wp-content/themes/responsive/
+htdocs/wp-content/themes/blankslate/
+conf/
+tmp/
+licenses/
+.idea/
+htdocs/wp-config.php
