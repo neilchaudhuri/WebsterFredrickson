@@ -53,3 +53,16 @@ p:first-letter {
     min-width: 100%;
     height: 300px;
 }
+
+.practice {
+    height: 2em;
+}
+
+.practice a {
+    color: black;
+}
+
+.practice a:hover {
+    color: cornflowerblue;
+    text-decoration: none;
+}
