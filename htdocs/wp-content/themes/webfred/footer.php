@@ -1,6 +1,6 @@
 <div class="clear"></div>
 </div>
-<footer id="footer" role="contentinfo" style="margin: auto; width: 50%; padding-top: 50px">
+<footer id="footer" role="contentinfo" style="padding-top: 30px" class="col-lg-12 text-center">
     <div>
         <a href="tel:1-202-659-8510">202-659-8510</a> | <a href="mailto:firm@websterfredrickson.com">firm@websterfredrickson.com</a> | <span class="address">1775 K St. NW Washington, DC  20535</span>
     </div>
