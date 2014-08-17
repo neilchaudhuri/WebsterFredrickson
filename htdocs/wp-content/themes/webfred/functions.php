@@ -1,5 +1,5 @@
 <?php
-add_theme_support('post-thumbnails', array('attorney', 'practice'));
+add_theme_support('post-thumbnails');
 
 /* Attorney custom type */
 function attorney()
@@ -29,52 +29,6 @@ function attorney()
 }
 
 add_action('init', 'attorney');
-
-add_action('add_meta_boxes', 'attorney_practices_box');
-function attorney_practices_box()
-{
-    add_meta_box(
-        'attorney_practices_box',
-        __('Practices', 'myplugin_textdomain'),
-        'attorney_practices_box_content',
-        'attorney',
-        'side',
-        'high'
-    );
-}
-
-function attorney_practices_box_content($post)
-{
-    wp_nonce_field(plugin_basename(__FILE__), 'attorney_practices_box_nonce');
-    $practices = get_post_meta( $post->ID, 'practices', true );
-    ?>
-
-    <label for="practices">Enter the practice areas for this attorney.</label>
-    <input type="text" id="practices" name="practices" placeholder="e.g. Bankruptcy" value="<?php echo $practices?>"  />
-
-<?php
-}
-
-
-add_action('save_post', 'attorney_practices_box_save');
-function attorney_practices_box_save($post_id)
-{
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
-        return;
-    if (!wp_verify_nonce($_POST['attorney_practices_box_nonce'], plugin_basename(__FILE__)))
-        return;
-
-    if ('page' == $_POST['post_type']) {
-        if (!current_user_can('edit_page', $post_id))
-            return;
-    } else {
-        if (!current_user_can('edit_post', $post_id))
-            return;
-    }
-    $practices = $_POST['practices'];
-    update_post_meta($post_id, 'practices', $practices);
-}
-
 
 /* Attorney custom type */
 
