@@ -38,7 +38,7 @@ $practice_connections = new WP_Query( array(
                     </figure>
                 </div>
                 <div class="col-lg-9">
-                    <?php  echo get_post_field('post_content', get_the_ID()); ?>
+                    <?php the_content(); ?>
                 </div>
             </div>
         </div>
