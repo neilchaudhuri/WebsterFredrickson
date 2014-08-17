@@ -2,7 +2,7 @@
     font-family: 'Libre Baskerville', serif;
 }
 
-p.big-brand:first-letter, p.little-brand:first-letter {
+a.big-brand p:first-letter, a.little-brand p:first-letter {
     font-size: 200%;
 }
 
