@@ -1,66 +1,171 @@
 <?php
-add_action( 'after_setup_theme', 'blankslate_setup' );
-function blankslate_setup()
+add_theme_support('post-thumbnails', array('attorney', 'practice'));
+
+/* Attorney custom type */
+function attorney()
 {
-load_theme_textdomain( 'blankslate', get_template_directory() . '/languages' );
-add_theme_support( 'automatic-feed-links' );
-add_theme_support( 'post-thumbnails' );
-global $content_width;
-if ( ! isset( $content_width ) ) $content_width = 640;
-register_nav_menus(
-array( 'main-menu' => __( 'Main Menu', 'blankslate' ) )
-);
+    $labels = array(
+        'name' => _x('Attorneys', 'post type general name'),
+        'singular_name' => _x('Attorney', 'post type singular name'),
+        'add_new_item' => __('Add New Attorney'),
+        'edit_item' => __('Edit Attorney'),
+        'new_item' => __('New Attorney'),
+        'all_items' => __('All Attorneys'),
+        'view_item' => __('View Attorney'),
+        'not_found' => __('No attorneys found'),
+        'not_found_in_trash' => __('No attorneys found in the trash'),
+        'parent_item_colon' => '',
+        'menu_name' => 'Attorneys'
+    );
+    $args = array(
+        'labels' => $labels,
+        'description' => 'Attorney in the law firm',
+        'public' => true,
+        'menu_position' => 5,
+        'supports' => array('title', 'editor', 'thumbnail'),
+        'has_archive' => true,
+    );
+    register_post_type('attorney', $args);
 }
-add_action( 'wp_enqueue_scripts', 'blankslate_load_scripts' );
-function blankslate_load_scripts()
+
+add_action('init', 'attorney');
+
+add_action('add_meta_boxes', 'attorney_practices_box');
+function attorney_practices_box()
 {
-wp_enqueue_script( 'jquery' );
+    add_meta_box(
+        'attorney_practices_box',
+        __('Practices', 'myplugin_textdomain'),
+        'attorney_practices_box_content',
+        'attorney',
+        'side',
+        'high'
+    );
 }
-add_action( 'comment_form_before', 'blankslate_enqueue_comment_reply_script' );
-function blankslate_enqueue_comment_reply_script()
+
+function attorney_practices_box_content($post)
 {
-if ( get_option( 'thread_comments' ) ) { wp_enqueue_script( 'comment-reply' ); }
+    wp_nonce_field(plugin_basename(__FILE__), 'attorney_practices_box_nonce');
+    $practices = get_post_meta( $post->ID, 'practices', true );
+    ?>
+
+    <label for="practices">Enter the practice areas for this attorney.</label>
+    <input type="text" id="practices" name="practices" placeholder="e.g. Bankruptcy" value="<?php echo $practices?>"  />
+
+<?php
 }
-add_filter( 'the_title', 'blankslate_title' );
-function blankslate_title( $title ) {
-if ( $title == '' ) {
-return '&rarr;';
-} else {
-return $title;
-}
-}
-add_filter( 'wp_title', 'blankslate_filter_wp_title' );
-function blankslate_filter_wp_title( $title )
+
+
+add_action('save_post', 'attorney_practices_box_save');
+function attorney_practices_box_save($post_id)
 {
-return $title . esc_attr( get_bloginfo( 'name' ) );
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+        return;
+    if (!wp_verify_nonce($_POST['attorney_practices_box_nonce'], plugin_basename(__FILE__)))
+        return;
+
+    if ('page' == $_POST['post_type']) {
+        if (!current_user_can('edit_page', $post_id))
+            return;
+    } else {
+        if (!current_user_can('edit_post', $post_id))
+            return;
+    }
+    $practices = $_POST['practices'];
+    update_post_meta($post_id, 'practices', $practices);
 }
-add_action( 'widgets_init', 'blankslate_widgets_init' );
-function blankslate_widgets_init()
+
+
+/* Attorney custom type */
+
+
+/* Practice custom type */
+
+function practice()
 {
-register_sidebar( array (
-'name' => __( 'Sidebar Widget Area', 'blankslate' ),
-'id' => 'primary-widget-area',
-'before_widget' => '<li id="%1$s" class="widget-container %2$s">',
-'after_widget' => "</li>",
-'before_title' => '<h3 class="widget-title">',
-'after_title' => '</h3>',
-) );
+    $labels = array(
+        'name' => _x('Practice Areas', 'post type general name'),
+        'singular_name' => _x('Practice Area', 'post type singular name'),
+        'add_new_item' => __('Add New Practice Area'),
+        'edit_item' => __('Edit Practice Area'),
+        'new_item' => __('New Practice Area'),
+        'all_items' => __('All Practice Areas'),
+        'view_item' => __('View Practice Area'),
+        'not_found' => __('No practice area found'),
+        'not_found_in_trash' => __('No practice areas found in the trash'),
+        'parent_item_colon' => '',
+        'menu_name' => 'Practice Areas'
+    );
+    $args = array(
+        'labels' => $labels,
+        'description' => 'Practice Area for the law firm',
+        'public' => true,
+        'menu_position' => 5,
+        'supports' => array('title', 'editor', 'thumbnail'),
+        'has_archive' => true,
+    );
+    register_post_type('practice', $args);
 }
-function blankslate_custom_pings( $comment )
+
+add_action('init', 'practice');
+
+add_action('add_meta_boxes', 'practice_summary_box');
+function practice_summary_box()
 {
-$GLOBALS['comment'] = $comment;
+    add_meta_box(
+        'practice_summary_box',
+        __('Practice Summary', 'myplugin_textdomain'),
+        'practice_summary_box_content',
+        'practice',
+        'normal',
+        'high'
+    );
+}
+
+function practice_summary_box_content($post)
+{
+    wp_nonce_field(plugin_basename(__FILE__), 'practice_summary_box_nonce');
+    $practice_summary = get_post_meta( $post->ID, 'practice_summary', true );
 ?>
-<li <?php comment_class(); ?> id="li-comment-<?php comment_ID(); ?>"><?php echo comment_author_link(); ?></li>
-<?php 
+    <label for="practice_summary"></label>
+    <textarea id="practice_summary" name="practice_summary" placeholder="Enter the summary for this practice area" style="width: 100%">
+        <?php echo $practice_summary?>
+    </textarea>
+<?php
 }
-add_filter( 'get_comments_number', 'blankslate_comments_number' );
-function blankslate_comments_number( $count )
+
+
+add_action('save_post', 'practice_summary_box_save');
+function practice_summary_box_save($post_id)
 {
-if ( !is_admin() ) {
-global $id;
-$comments_by_type = &separate_comments( get_comments( 'status=approve&post_id=' . $id ) );
-return count( $comments_by_type['comment'] );
-} else {
-return $count;
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE)
+        return;
+    if (!wp_verify_nonce($_POST['practice_summary_box_nonce'], plugin_basename(__FILE__)))
+        return;
+
+    if ('page' == $_POST['post_type']) {
+        if (!current_user_can('edit_page', $post_id))
+            return;
+    } else {
+        if (!current_user_can('edit_post', $post_id))
+            return;
+    }
+    $practice_summary = $_POST['practice_summary'];
+    update_post_meta($post_id, 'practice_summary', $practice_summary);
 }
+
+/* Practice custom type */
+
+
+/* Connections */
+
+function connections()
+{
+    p2p_register_connection_type(array(
+        'name' => 'practices_to_attorneys',
+        'from' => 'practice',
+        'to' => 'attorney'
+    ));
 }
+
+add_action('p2p_init', 'connections');
