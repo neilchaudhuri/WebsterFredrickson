@@ -41,8 +41,8 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand hidden-xs big-brand" href="#"><p style="display: inline-block">W</p>EBSTER &amp; <p style="display: inline-block">F</p>REDRICKSON, PLLC</a>
-                    <a class="navbar-brand visible-xs little-brand" href="#"><p style="display: inline-block">W</p>EBSTER &amp; <p style="display: inline-block">F</p>REDRICKSON, PLLC</a>
+                    <a class="navbar-brand hidden-xs big-brand" href="/"><p style="display: inline-block">W</p>EBSTER &amp; <p style="display: inline-block">F</p>REDRICKSON, PLLC</a>
+                    <a class="navbar-brand visible-xs little-brand" href="/"><p style="display: inline-block">W</p>EBSTER &amp; <p style="display: inline-block">F</p>REDRICKSON, PLLC</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
