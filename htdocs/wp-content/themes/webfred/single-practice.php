@@ -18,7 +18,7 @@ $attorney_connections = new WP_Query( array(
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <?php  echo get_post_field('post_content', get_the_ID()); ?>
+                    <?php the_content(); ?>
                 </div>
             </div>
             <div class="row">
