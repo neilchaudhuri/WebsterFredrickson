@@ -66,3 +66,11 @@ a.big-brand p:first-letter, a.little-brand p:first-letter {
     color: cornflowerblue;
     text-decoration: none;
 }
+
+li {
+    list-style-type: none;
+}
+
+.text {
+    line-height: 1em;
+}
