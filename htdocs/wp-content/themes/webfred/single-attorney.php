@@ -20,6 +20,7 @@ $practice_connections = new WP_Query( array(
                 <div class="col-lg-3">
                     <figure>
                         <?php the_post_thumbnail('medium'); ?>
+                        <div>Practice Areas</div>
                         <div>
                             <?php
                             if ( $practice_connections->have_posts() ) :
@@ -37,7 +38,7 @@ $practice_connections = new WP_Query( array(
                         </div>
                     </figure>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-9 text">
                     <?php the_content(); ?>
                 </div>
             </div>
