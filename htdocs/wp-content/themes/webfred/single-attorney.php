@@ -13,7 +13,7 @@ $practice_connections = new WP_Query( array(
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    <h1><?php echo get_the_title(get_the_ID()) ?></h1>
+                    <h1><?php single_post_title(); ?> </h1>
                 </div>
             </div>
             <div class="row">
